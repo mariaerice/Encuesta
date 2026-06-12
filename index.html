@@ -312,35 +312,50 @@
 
         .success-message {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(135deg, #148c00, #9b50e6);
-            border-radius: 1.5rem;
             text-align: center;
-            padding: 4rem 2rem;
-            margin-top: 2rem;
-            animation: slideDown 0.5s ease-out;
+            padding: 0;
+            margin: 0;
+            z-index: 9999;
+            animation: fadeIn 0.6s ease-out;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .success-message h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
             background: linear-gradient(120deg, #ffffff, #d4b8ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             line-height: 1.2;
+            padding: 0 2rem;
         }
 
         .success-message p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: rgba(255,255,255,0.85);
-            max-width: 400px;
+            max-width: 480px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.7;
+            padding: 0 2rem;
         }
 
         .success-message.show {
-            display: block;
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         @media (max-width: 600px) {
@@ -678,13 +693,14 @@
                 <!-- SUBMIT -->
                 <button type="submit" class="form-submit">Enviar respuestas →</button>
 
-                <!-- SUCCESS MESSAGE -->
-                <div class="success-message" id="successMessage">
-                    <h1>Muchas gracias por tu tiempo</h1>
-                    <p>Tu respuesta nos ayuda muchísimo a construir algo que realmente valga la pena. Pronto tendrás noticias.</p>
-                </div>
             </form>
         </div>
+    </div>
+
+    <!-- SUCCESS MESSAGE - fuera del formulario para cubrir toda la pantalla -->
+    <div class="success-message" id="successMessage">
+        <h1>Muchas gracias por tu tiempo</h1>
+        <p>Tu respuesta nos ayuda muchísimo a construir algo que realmente valga la pena. Pronto tendrás noticias.</p>
     </div>
 
     <script>
