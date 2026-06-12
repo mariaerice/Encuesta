@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu transición a tech - Encuesta</title>
+    <meta name="description" content="Encuesta para validar plataforma de mentoría para transiciones a tech.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #148c00;
+            --primary-purple: #9b50e6;
+            --primary-orange: #9333ea;
+            --dark: #0F172A;
+            --light-gray: #F8FAFC;
+            --border-gray: #E2E8F0;
+            --text-secondary: #64748B;
+            --gradient-primary: linear-gradient(0deg, rgba(20, 140, 0, 1), rgba(155, 80, 230, 1));
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--dark);
+            background: linear-gradient(0deg, rgba(20, 140, 0, 0.08), rgba(155, 80, 230, 0.08));
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header {
+            margin-bottom: 3rem;
+            text-align: center;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header h1 {
+            font-size: 1.95rem;
+            margin-bottom: 1.25rem;
+            color: var(--dark);
+            font-weight: 700;
+            line-height: 1.3;
+            background: linear-gradient(120deg, #148c00, #9b50e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .header p strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 1rem;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(155, 80, 230, 0.08);
+            border: 1px solid rgba(155, 80, 230, 0.15);
+            animation: slideUp 0.6s ease-out 0.1s both;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 2px solid var(--border-gray);
+            position: relative;
+        }
+
+        .form-section::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            height: 2px;
+            width: 0;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .form-section:hover::before {
+            width: 100%;
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .form-section.hidden {
+            display: none;
+        }
+
+        .question-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 1.25rem;
+            display: block;
+            background: linear-gradient(120deg, var(--dark), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .question-hint {
+            font-size: 0.85rem;
+            color: var(--primary-purple);
+            margin-bottom: 1rem;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        .form-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .form-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            background: var(--light-gray);
+        }
+
+        .form-option:hover {
+            background: linear-gradient(135deg, rgba(20, 140, 0, 0.08), rgba(155, 80, 230, 0.08));
+            border-color: var(--primary-blue);
+            transform: translateX(4px);
+        }
+
+        .form-option input[type="radio"],
+        .form-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            cursor: pointer;
+            accent-color: var(--primary-blue);
+            transition: all 0.2s;
+        }
+
+        .form-option input[type="radio"]:checked,
+        .form-option input[type="checkbox"]:checked {
+            accent-color: var(--primary-orange);
+            filter: drop-shadow(0 0 4px var(--primary-orange));
+        }
+
+        .form-option label {
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .form-option:has(input:checked) {
+            background: linear-gradient(135deg, rgba(20, 140, 0, 0.1), rgba(155, 80, 230, 0.1));
+            border-color: var(--primary-purple);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        input[type="text"]::placeholder,
+        input[type="email"]::placeholder,
+        textarea::placeholder {
+            color: rgba(100, 116, 139, 0.5);
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #9b50e6;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(155, 80, 230, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .sub-question {
+            margin-left: 2.5rem;
+            margin-top: 1.25rem;
+            padding-left: 1.25rem;
+            border-left: 3px solid var(--primary-purple);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .sub-question.hidden {
+            display: none;
+        }
+
+        .form-submit {
+            background: linear-gradient(135deg, #148c00 0%, #9b50e6 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            width: 100%;
+            letter-spacing: 0.03em;
+            box-shadow: 0 8px 24px rgba(155, 80, 230, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .form-submit:hover::before {
+            left: 100%;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(124, 58, 237, 0.35);
+        }
+
+        .form-submit:active {
+            transform: translateY(-1px);
+        }
+
+        .form-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, rgba(20, 140, 0, 0.1), rgba(59, 130, 246, 0.1));
+            border: 2px solid #10B981;
+            color: #065F46;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            font-size: 1.15rem;
+            margin-top: 2rem;
+            font-weight: 600;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .success-message::before {
+            content: '✓';
+            display: block;
+            font-size: 3rem;
+            color: #10B981;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            .form-wrapper {
+                padding: 1.75rem;
+            }
+
+            .header h1 {
+                font-size: 1.65rem;
+            }
+
+            .header p {
+                font-size: 0.95rem;
+            }
+
+            .sub-question {
+                margin-left: 1.5rem;
+                padding-left: 1rem;
+            }
+
+            .form-option {
+                padding: 0.85rem;
+            }
+
+            .question-label {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Estamos construyendo una plataforma para transiciones tech</h1>
+            <p>
+                <strong> Tus 5 minutos definirán si funciona. </strong>
+            </p>
+        </div>
+
+        <div class="form-wrapper">
+            <form id="surveyForm">
+
+                <!-- P1: Edad -->
+                <div class="form-section">
+                    <label class="question-label">¿Qué edad tienes?</label>
+                    <div class="form-options">
+                        <div class="form-option">
+                            <input type="radio" id="age-18-25" name="age" value="18-25" required>
+                            <label for="age-18-25">18 a 25</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="age-26-30" name="age" value="26-30">
+                            <label for="age-26-30">26 a 30</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="age-31-40" name="age" value="31-40">
+                            <label for="age-31-40">31 a 40</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="age-41-50" name="age" value="41-50">
+                            <label for="age-41-50">41 a 50</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="age-50plus" name="age" value="+50">
+                            <label for="age-50plus">+50</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P2: Área -->
+                <div class="form-section">
+                    <label class="question-label">¿Hacia qué área estás buscando transicionar profesionalmente?</label>
+                    <div class="form-options">
+                        <div class="form-option">
+                            <input type="radio" id="area-ux" name="area" value="UX/UI Design" required>
+                            <label for="area-ux">UX/UI Design</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="area-pm" name="area" value="Product Management">
+                            <label for="area-pm">Product Management</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="area-md" name="area" value="Marketing Digital">
+                            <label for="area-md">Marketing Digital</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="area-data" name="area" value="Data Science / Analytics">
+                            <label for="area-data">Data Science / Analytics</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="area-other" name="area" value="Otra">
+                            <label for="area-other">Otra área tech</label>
+                        </div>
+                    </div>
+                    <input type="text" name="areaOther" placeholder="¿Cuál?" style="margin-top: 0.75rem; display: none;">
+                </div>
+
+                <!-- P3: Background -->
+                <div class="form-section">
+                    <label class="question-label">¿Cuál es tu background: título y/o trabajo actual?</label>
+                    <input type="text" name="background" placeholder="Ej: Abogada, Psicólogo, Contador..." required>
+                </div>
+
+                <!-- P4: Situación profesional -->
+                <div class="form-section">
+                    <label class="question-label">¿Cuál es tu situación profesional actual?</label>
+                    <div class="form-options">
+                        <div class="form-option">
+                            <input type="radio" id="situation-grad" name="situation" value="Recién graduado" required>
+                            <label for="situation-grad">Recién me gradué y no tengo experiencia profesional</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="situation-trans" name="situation" value="Transición">
+                            <label for="situation-trans">Trabajo en otro sector y estoy pensando en una transición de carrera</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="situation-unemp" name="situation" value="Sin trabajo">
+                            <label for="situation-unemp">Estoy sin trabajo pero tengo experiencia profesional</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="situation-pivot" name="situation" value="Cambio en tech">
+                            <label for="situation-pivot">Ya trabajo en tech pero quiero cambiar de puesto (ej: developer → marketing digital)</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="situation-other" name="situation" value="Otro">
+                            <label for="situation-other">Otro</label>
+                        </div>
+                    </div>
+                    <input type="text" name="situationOther" placeholder="Especifica..." style="margin-top: 0.75rem; display: none;">
+                </div>
+
+                <!-- P5: Obstáculos -->
+                <div class="form-section">
+                    <label class="question-label">¿Cuál crees que es tu principal obstáculo para lograr esta transición profesional?</label>
+                    <p class="question-hint">Puedes seleccionar más de una opción</p>
+                    <div class="form-options">
+                        <div class="form-option">
+                            <input type="checkbox" id="obstacle-path" name="obstacle" value="No tengo el camino a seguir claro">
+                            <label for="obstacle-path">No tengo el camino a seguir claro</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="obstacle-network" name="obstacle" value="No tengo red de contactos ni mentores">
+                            <label for="obstacle-network">No tengo red de contactos ni mentores</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="obstacle-interviews" name="obstacle" value="No logro acceder a entrevistas laborales">
+                            <label for="obstacle-interviews">No logro acceder a entrevistas laborales</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="obstacle-skills" name="obstacle" value="No tengo habilidades técnicas">
+                            <label for="obstacle-skills">No tengo habilidades técnicas / formación específica</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="obstacle-fear" name="obstacle" value="No me siento capaz">
+                            <label for="obstacle-fear">No me siento capaz de lograrlo (dificultad de temas, síndrome del impostor, etc)</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="obstacle-resources" name="obstacle" value="No tengo tiempo/recursos">
+                            <label for="obstacle-resources">No tengo el tiempo / recursos necesarios para hacerlo</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="obstacle-other" name="obstacle" value="Otro">
+                            <label for="obstacle-other">Otro</label>
+                        </div>
+                    </div>
+                    <input type="text" name="obstacleOther" placeholder="Especifica..." style="margin-top: 0.75rem; display: none;">
+                </div>
+
+                <!-- P6: Mentoría antes -->
+                <div class="form-section">
+                    <label class="question-label">¿Has buscado mentorías antes para esta transición?</label>
+                    <div class="form-options">
+                        <div class="form-option">
+                            <input type="radio" id="mentor-yes" name="mentorBefore" value="Sí" required>
+                            <label for="mentor-yes">Sí</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="mentor-no" name="mentorBefore" value="No">
+                            <label for="mentor-no">No</label>
+                        </div>
+                    </div>
+
+                    <div class="form-section sub-question hidden" id="mentorHow">
+                        <label class="question-label">¿Cómo?</label>
+                        <p class="question-hint">Puedes seleccionar más de una opción</p>
+                        <div class="form-options">
+                            <div class="form-option">
+                                <input type="checkbox" id="mentor-linkedin" name="mentorHow" value="Contactando gente por LinkedIn">
+                                <label for="mentor-linkedin">Contactando gente por LinkedIn</label>
+                            </div>
+                            <div class="form-option">
+                                <input type="checkbox" id="mentor-friends" name="mentorHow" value="Hablando con amigos/conocidos informalmente">
+                                <label for="mentor-friends">Hablando con amigos/conocidos informalmente</label>
+                            </div>
+                            <div class="form-option">
+                                <input type="checkbox" id="mentor-work" name="mentorHow" value="Hablando con mentores en el trabajo">
+                                <label for="mentor-work">Hablando con mentores en el trabajo</label>
+                            </div>
+                            <div class="form-option">
+                                <input type="checkbox" id="mentor-uni" name="mentorHow" value="Por medio de profesores en la universidad">
+                                <label for="mentor-uni">Por medio de profesores en la universidad</label>
+                            </div>
+                            <div class="form-option">
+                                <input type="checkbox" id="mentor-paid" name="mentorHow" value="Pagando a profesionales">
+                                <label for="mentor-paid">Pagando a profesionales</label>
+                            </div>
+                            <div class="form-option">
+                                <input type="checkbox" id="mentor-platform" name="mentorHow" value="Suscribiéndose en plataformas">
+                                <label for="mentor-platform">Suscribiéndome en plataformas de mentoría</label>
+                            </div>
+                        </div>
+                        <input type="text" name="mentorPlatformName" placeholder="¿En cuál plataforma?" style="margin-top: 0.75rem;">
+                    </div>
+                </div>
+
+                <!-- P7: Disposición a pagar -->
+                <div class="form-section">
+                    <label class="question-label">¿Pagarías por una plataforma que te oriente en los pasos a seguir y te ofrezca un servicio de mentoría?</label>
+                    <div class="form-options">
+                        <div class="form-option">
+                            <input type="radio" id="pay-yes-sure" name="willPay" value="Sí, sin dudarlo" required>
+                            <label for="pay-yes-sure">Sí, sin dudarlo</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="pay-yes-depends" name="willPay" value="Sí, pero depende del precio">
+                            <label for="pay-yes-depends">Sí, pero depende del precio</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="pay-maybe" name="willPay" value="Tal vez, debería ser muy atractiva">
+                            <label for="pay-maybe">Tal vez, debería ser muy atractiva la propuesta</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="radio" id="pay-no" name="willPay" value="No, prefiero recursos gratis">
+                            <label for="pay-no">No, prefiero recursos gratis</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P8: Cuánto pagar -->
+                <div class="form-section hidden" id="howMuchPay">
+                    <label class="question-label">¿Cuánto estarías dispuesto/a a pagar mensualmente?</label>
+                    <div style="padding: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-size: 0.9rem; color: var(--text-secondary);">€5</span>
+                            <span style="font-size: 1.1rem; font-weight: 600; color: var(--primary-purple);" id="priceLabel">€20/mes</span>
+                            <span style="font-size: 0.9rem; color: var(--text-secondary);">€50+</span>
+                        </div>
+                        <input type="range" id="priceSlider" name="price" min="5" max="50" value="20" step="1"
+                            style="width: 100%; height: 6px; accent-color: #9b50e6; cursor: pointer;"
+                            oninput="document.getElementById('priceLabel').textContent = (this.value == 50 ? '€50+/mes' : '€' + this.value + '/mes')">
+                    </div>
+                </div>
+
+                <!-- P9: Tiempo disponible -->
+                <div class="form-section">
+                    <label class="question-label">¿Cuánto tiempo tienes disponible semanalmente para dedicarle al proceso?</label>
+                    <div style="padding: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-size: 0.9rem; color: var(--text-secondary);">1 hora</span>
+                            <span style="font-size: 1.1rem; font-weight: 600; color: var(--primary-purple);" id="timeLabel">5 horas/semana</span>
+                            <span style="font-size: 0.9rem; color: var(--text-secondary);">20+ horas</span>
+                        </div>
+                        <input type="range" id="timeSlider" name="timeAvailable" min="1" max="20" value="5" step="1"
+                            style="width: 100%; height: 6px; accent-color: #9b50e6; cursor: pointer;"
+                            oninput="document.getElementById('timeLabel').textContent = (this.value == 20 ? '20+ horas/semana' : this.value + ' hora' + (this.value == 1 ? '' : 's') + '/semana')">
+                    </div>
+                </div>
+
+                <!-- P10: Tipo de mentores -->
+                <div class="form-section">
+                    <label class="question-label">¿A qué tipo de mentores te gustaría tener acceso?</label>
+                    <div class="form-options">
+                        <div class="form-option">
+                            <input type="checkbox" id="mentor-type-big" name="mentorType" value="Empresas grandes">
+                            <label for="mentor-type-big">Gente que esté trabajando en empresas grandes (Google, Microsoft, etc)</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="mentor-type-startup" name="mentorType" value="Startups">
+                            <label for="mentor-type-startup">Gente que esté trabajando en startups</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="mentor-type-freelance" name="mentorType" value="Independientes">
+                            <label for="mentor-type-freelance">Gente que trabaje de manera independiente</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="mentor-type-transition" name="mentorType" value="Misma transición">
+                            <label for="mentor-type-transition">Gente que haya logrado la misma transición que yo quiero (ex-abogada → UX, etc)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P11: Features -->
+                <div class="form-section">
+                    <label class="question-label">¿Qué te gustaría que la plataforma te ofrezca?</label>
+                    <div class="form-options">
+                        <div class="form-option">
+                            <input type="checkbox" id="feature-roadmap" name="feature" value="Una guía clara de pasos a seguir">
+                            <label for="feature-roadmap">Una guía clara de pasos a seguir</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="feature-sessions" name="feature" value="Sesiones 1:1 con mentores">
+                            <label for="feature-sessions">Sesiones 1:1 con mentores</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="feature-community" name="feature" value="Comunidad donde compartir">
+                            <label for="feature-community">Comunidad donde compartir dudas y oportunidades</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="feature-resources" name="feature" value="Acceso a recursos">
+                            <label for="feature-resources">Acceso a recursos (cursos, libros, herramientas)</label>
+                        </div>
+                        <div class="form-option">
+                            <input type="checkbox" id="feature-cv" name="feature" value="Ayuda con CV y LinkedIn">
+                            <label for="feature-cv">Ayuda con CV, LinkedIn, portfolio</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P12: Comentario abierto -->
+                <div class="form-section">
+                    <label class="question-label">Si quieres dejarnos un comentario, es bienvenido!</label>
+                    <textarea name="comment" placeholder="Tu feedback aquí..." maxlength="300"></textarea>
+                </div>
+
+                <!-- P13: Email -->
+                <div class="form-section">
+                    <label class="question-label">Si quieres ser parte de las primeras personas en testear la plataforma, déjanos tu email:</label>
+                    <input type="email" name="email" placeholder="tu@email.com" required>
+                </div>
+
+                <!-- SUBMIT -->
+                <button type="submit" class="form-submit">Enviar respuestas →</button>
+
+                <!-- SUCCESS MESSAGE -->
+                <div class="success-message" id="successMessage">
+                    ¡Muchas gracias por tu tiempo! Tu respuesta nos ayuda muchísimo a construir algo que realmente valga la pena. ¡Pronto tendrás noticias! 🚀
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar campo de área "otra" si se selecciona
+        document.querySelectorAll('input[name="area"]').forEach(input => {
+            input.addEventListener('change', () => {
+                if (input.value === 'Otra') {
+                    document.querySelector('input[name="areaOther"]').style.display = 'block';
+                } else {
+                    document.querySelector('input[name="areaOther"]').style.display = 'none';
+                }
+            });
+        });
+
+        // Mostrar campo de situación "otra" si se selecciona
+        document.querySelectorAll('input[name="situation"]').forEach(input => {
+            input.addEventListener('change', () => {
+                if (input.value === 'Otro') {
+                    document.querySelector('input[name="situationOther"]').style.display = 'block';
+                } else {
+                    document.querySelector('input[name="situationOther"]').style.display = 'none';
+                }
+            });
+        });
+
+        // Mostrar campo de obstáculo "otra" si se selecciona
+        document.querySelectorAll('input[name="obstacle"]').forEach(input => {
+            input.addEventListener('change', () => {
+                const anyOther = document.querySelector('input[name="obstacle"][value="Otro"]').checked;
+                document.querySelector('input[name="obstacleOther"]').style.display = anyOther ? 'block' : 'none';
+            });
+        });
+
+        // Mentoría antes - mostrar/ocultar "cómo"
+        document.querySelectorAll('input[name="mentorBefore"]').forEach(input => {
+            input.addEventListener('change', () => {
+                const mentorHow = document.getElementById('mentorHow');
+                if (input.value === 'Sí') {
+                    mentorHow.classList.remove('hidden');
+                } else {
+                    mentorHow.classList.add('hidden');
+                }
+            });
+        });
+
+        // Willingness to pay - mostrar/ocultar "cuánto pagar"
+        document.querySelectorAll('input[name="willPay"]').forEach(input => {
+            input.addEventListener('change', () => {
+                const howMuchPay = document.getElementById('howMuchPay');
+                if (input.value === 'Sí, sin dudarlo' || input.value === 'Sí, pero depende del precio') {
+                    howMuchPay.classList.remove('hidden');
+                } else {
+                    howMuchPay.classList.add('hidden');
+                }
+            });
+        });
+
+        // ENVÍO FORMULARIO
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxyxFvXLSP339m4DpjWxpJEbNh2_iy6Qqspjqv3--VhCNoxB8ZT3OSYoOSZ5JW3wiEo-w/exec';
+
+        const form = document.getElementById('surveyForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = form.querySelector('.form-submit');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            // Collect all form data into a plain object
+            const formData = new FormData(form);
+            const data = { timestamp: new Date().toISOString() };
+            formData.forEach((value, key) => {
+                if (data[key]) {
+                    data[key] = data[key] + ', ' + value;
+                } else {
+                    data[key] = value;
+                }
+            });
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                // no-cors won't give us a status, so we assume success
+                form.style.display = 'none';
+                document.getElementById('successMessage').classList.add('show');
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error submitting the form. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar respuestas →';
+            }
+        });
+    </script>
+</body>
+</html>
